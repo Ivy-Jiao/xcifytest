@@ -1,0 +1,62 @@
+<!-- The purpose of this test is to test your HTML and JavaScript skill. 
+    This is NOT to assess your design skill. Please create a very simple login form (ie. 2 text boxes with 1 login button).-->
+<!-- Post URL is https://xcifytest.azurewebsites.net/home/login
+    Arguments (parameters) must be passed using JSON format. The FIELDs (case sensitive) are: UserName and Password
+    When the login is successful, please redirect the user to https://xcifytest.azurewebsites.net/home/helloworld
+    When the login fails, please display an error dialog
+    -->
+<html>
+
+<body>
+
+        
+    <form>
+        <div>
+            <label>Username:</label>
+            <input id = "username" name = "username" required>
+        </div>
+
+        <div>
+            <label>Password:</label>
+            <input id="password" type = "password" required name = "password">
+        </div>
+
+        <div>
+            <button id="sumbit_button" type = "button">Submit</button>
+        </div>
+
+    </form>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+        // get element
+        var btn = document.getElementById("sumbit_button");
+        var usernameInput = document.getElementById("username");
+        var passwordInput = document.getElementById("password");
+
+        //click event
+        btn.onclick = function(){
+            //get the input
+            var username = usernameInput.value;
+            var password = passwordInput.value;
+
+            //test input
+            //console.log(username);
+            //console.log(password);
+
+            //Ajax post, using jquery
+            $.post("home/login.php", {username: username, password: password}, function(data){
+                //get the ErrCode pass
+                alert(data.data);
+                if(data.ErrCode === 0){
+                    //Login succeeded
+                    location.href = "https://xcifytest.azurewebsites.net/home/helloworld"
+                }
+            }, 'json')
+        }
+    </script>
+
+</body>
+
+</html>
